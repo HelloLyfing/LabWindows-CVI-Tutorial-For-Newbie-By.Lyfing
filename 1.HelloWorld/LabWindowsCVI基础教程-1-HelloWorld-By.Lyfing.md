@@ -10,8 +10,11 @@
 好了，闲话少说，我们今天就开始LabWindows/CVI的第一个工程：  
 **1.Hello World.**  
 具体内容：  
-创建一个主面板（在LabWindows/CVI内部，Panel和Windows系统的窗口概念相当），在主面板上放置一个按钮，点击按钮，弹出消息"Hello world".
-*****
+创建一个主面板（在LabWindows/CVI内部，Panel和Windows系统的窗口概念相当），在主面板上放置一个按钮，点击按钮，弹出消息"Hello world".效果如下所示：
+![](http://img.blog.csdn.net/20130620094523406)
+*****  
+###具体步骤
+
 1. 在LabWindows/CVI的开始界面，选择 Project >> New project，创建一个新工程
 ![](http://img.blog.csdn.net/20130620094251656)
 
@@ -42,16 +45,15 @@
 10. 在弹出的**New Project Option**菜单点击**OK**.  
 ![](http://img.blog.csdn.net/20130620094459453)
 
-11. 之后会弹出**HelloWorld.c**文件的编辑界面。**将光标定位到**OK\_Btn\_Callback()函数,在**switch(event)**语句的**case EVENT_COMMIT**和**break;**之间添加如下的代码
-
-
-    switch (event) {  
-        case EVENT_COMMIT:  
-            char title[30] = "I'm the title!";  
-            char msg[100] = "Hello World !";  
-            MessagePopup(title, msg);  
-        	break;  
-    }
+11. 之后会弹出**HelloWorld.c**文件的编辑界面。**将光标定位到**OK\_Btn\_Callback()函数,在**switch(event)**语句的**case EVENT_COMMIT**和**break;**之间添加代码，内容如下：  
+<pre><code>switch (event) {  
+    case EVENT_COMMIT:  
+        char title[30] = "I'm the title!";  
+        char msg[100] = "Hello World !";  
+        MessagePopup(title, msg);  
+        break;  
+}
+</code></pre>
 ![](http://img.blog.csdn.net/20130620094512031)
 
 12. 好了，一切准备工作都已就绪，我们试运行一下这个程序，点击如图所示的**Debug Project**按钮，运行程序吧！
