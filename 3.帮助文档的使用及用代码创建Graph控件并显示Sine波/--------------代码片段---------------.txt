@@ -1,0 +1,91 @@
+﻿-------------- 代码片段1 ---------------
+#include <cvirte.h>     
+#include <userint.h>
+#include "src.h"
+
+static int panelHandle;
+
+int main (int argc, char *argv[]){
+    if (InitCVIRTE (0, argv, 0) == 0)
+        return -1;  /* out of memory */
+    if ((panelHandle = LoadPanel (0, "src.uir", PANEL)) < 0)
+        return -1;
+    DisplayPanel (panelHandle);
+    RunUserInterface ();
+    DiscardPanel (panelHandle);
+    return 0;
+}  
+
+-------------- 代码片段2 ---------------
+#include <cvirte.h>     
+#include <userint.h>
+#include "src.h"
+# 上面的include语句是引入系统所需的一些内置函数，  
+# 稍懂C语言的应该不会对此陌生
+
+# panelHandle是整个程序的灵魂支柱，
+# 它持有着系统/程序主面板(如果程序有图形化界面的话)
+# 在系统内存中的**句柄**，意即编程人员需要通过这个句柄
+# 来与主面板进行交互
+static int panelHandle;
+
+# 传说中的main()函数
+int main (int argc, char *argv[]){
+    # 系统初始化
+    if (InitCVIRTE (0, argv, 0) == 0)
+        return -1;  /* out of memory */
+    # LoadPanel是LabWindows/CVI的自带函数(以后简称"Lab自带函数")
+    # 它的作用是什么呢？请把光标放到LoadPanel这个函数名的任意位置，然后按F1，
+    # 接着会弹出 NI LabWindows/CVI Help 面板(如下图所示)，
+    # 面板左面是索引选项，面板右面便是我们的LoadPanel()函数的详细使用说明
+    # 看着一大堆英文是不是觉得有些头大？但我强烈推荐你硬着头皮看下去，因为
+    # 这个函数很重要，而且关于它的使用帮助包含了很多LabWindows/CVI程序的构建机理
+    # 也许刚开始你会觉得看的云里雾里，但只要每次接触新函数时花功夫看上一会，
+    # 一星期后你就会感觉编写程序似有"游刃有余"之感了，而到此时，你已经几乎可以
+    # 不借助外界帮助(用搜索引擎、官方BBS论坛查找信息)独立完成大部分的编程工作了
+    if ((panelHandle = LoadPanel (0, "src.uir", PANEL)) < 0)
+        return -1;
+    DisplayPanel (panelHandle);
+    RunUserInterface ();
+    DiscardPanel (panelHandle);
+    return 0;
+}
+
+-------------- 代码片段3 ---------------
+#include <cvirte.h>     
+#include <userint.h>
+
+static int panelHandle;
+
+int main (int argc, char *argv[]){
+    if (InitCVIRTE (0, argv, 0) == 0)
+        return -1;  /* out of memory */
+    if ( panelHandle = createGUI_Mine())
+        return -1;
+    DisplayPanel (panelHandle);
+    RunUserInterface ();
+    DiscardPanel (panelHandle);
+    return 0;
+}
+
+int createGUI_Mine(){
+    pHandle = createMainPanel_Mine();
+    
+    return pHandle
+}
+
+int createMainPanel_Mine(){
+    tempHandle = NewPanel(0, "用代码创建的图形界面", VAL_AUTO_CENTER, VAL_AUTO_CENTER, 500, 600)
+    return tempHandle
+}
+
+-------------- 代码片段2 ---------------
+-------------- 代码片段2 ---------------
+-------------- 代码片段2 ---------------
+-------------- 代码片段2 ---------------
+-------------- 代码片段2 ---------------
+-------------- 代码片段2 ---------------
+-------------- 代码片段2 ---------------
+-------------- 代码片段2 ---------------
+-------------- 代码片段2 ---------------
+-------------- 代码片段2 ---------------
