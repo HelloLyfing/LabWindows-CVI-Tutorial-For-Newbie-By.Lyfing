@@ -52,32 +52,32 @@ int main (int argc, char *argv[]){
 }
 
 -------------- 代码片段3 ---------------
+#include <utility.h>
 #include <cvirte.h>     
 #include <userint.h>
 
 static int panelHandle;
 
+int createGUI_Mine(void);
+
 int main (int argc, char *argv[]){
     if (InitCVIRTE (0, argv, 0) == 0)
         return -1;  /* out of memory */
-    if ( panelHandle = createGUI_Mine())
+    if ((panelHandle = createGUI_Mine()) < 0)
         return -1;
     DisplayPanel (panelHandle);
-    RunUserInterface ();
+    RunUserInterface();
     DiscardPanel (panelHandle);
     return 0;
 }
 
 int createGUI_Mine(){
-    pHandle = createMainPanel_Mine();
-    
-    return pHandle
+    int pHandle = NewPanel(0, "用代码创建的图形界面", VAL_AUTO_CENTER, VAL_AUTO_CENTER, 600, 800);
+    return pHandle;
 }
 
-int createMainPanel_Mine(){
-    tempHandle = NewPanel(0, "用代码创建的图形界面", VAL_AUTO_CENTER, VAL_AUTO_CENTER, 500, 600)
-    return tempHandle
-}
+
+
 
 -------------- 代码片段2 ---------------
 -------------- 代码片段2 ---------------

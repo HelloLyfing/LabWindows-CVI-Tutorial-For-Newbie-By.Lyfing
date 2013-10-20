@@ -1,7 +1,7 @@
 [Workspace Header]
 Version = 911
-Pathname Line0001 = "/d/Developer/Github-Repo/LabWindows-CVI-Tutorial-For-Newbie-By.Lyfing/3.帮助文档"
-Pathname Line0002 = "的使用及用代码创建Graph控件并显示Sine波/project/src3.cws"
+Pathname Line0001 = "/d/Developer/Github-Repo/LabWindows-CVI-Tutorial-For-Newbie-By.Lyfing/2.Create-A"
+Pathname Line0002 = "-Graph-And-Show-Sine-Cosine-Wave-On-It/project/2-Using-Graph-Demo.cws"
 CVI Dir = "/c/program files (x86)/national instruments/cvi2009"
 CVI Shared Dir = "/C/Program Files (x86)/National Instruments/Shared/CVI"
 CVI Pub Local Dir = "/C/ProgramData/National Instruments/CVI2009"
@@ -12,7 +12,7 @@ VXIplug&play Framework Dir = "/C/Program Files (x86)/IVI Foundation/VISA/winnt"
 VXIplug&play Framework 64-bit Dir = "/C/Program Files/IVI Foundation/VISA/win64"
 Number of Projects = 1
 Active Project = 1
-Project 0001 = "src3.prj"
+Project 0001 = "2-Using-Graph-Demo.prj"
 Drag Bar Left = 160
 Window Top = 33
 Window Left = 63
@@ -30,7 +30,7 @@ Save Changes Before Running = "Always"
 Hide Windows = False
 Break At First Statement = False
 Sort Type = "File Name"
-Number of Opened Files = 1
+Number of Opened Files = 2
 Window Confinement Region Enabled = True
 MainColumnWidth = 143
 FileDateColumnWidth = 70
@@ -49,13 +49,27 @@ Batch Build Debug = False
 Force Rebuild = False
 
 [File 0001]
-Path Line0001 = "/d/Developer/Github-Repo/LabWindows-CVI-Tutorial-For-Newbie-By.Lyfing/3.帮助文档"
-Path Line0002 = "的使用及用代码创建Graph控件并显示Sine波/project/src3.c"
+Path Line0001 = "/d/Developer/Github-Repo/LabWindows-CVI-Tutorial-For-Newbie-By.Lyfing/2.Create-A"
+Path Line0002 = "-Graph-And-Show-Sine-Cosine-Wave-On-It/project/2-Using-Graph-Demo.c"
 File Type = "CSource"
-Disk Date = 3464670603
+Disk Date = 3463993225
 In Projects = "1,"
+Window Top = 32
+Window Left = 10
 Window Z-Order = 1
-Source Window State = "1,43,45,43,16,16,16,0,0,157,0,1,0,1,0,23,51,0,73,16,0,0,0,0,"
+Source Window State = "1,0,0,0,0,0,0,0,0,157,0,0,0,0,0,23,0,0,0,0,291,607,1,0,"
+
+[File 0002]
+Path Line0001 = "/d/Developer/Github-Repo/LabWindows-CVI-Tutorial-For-Newbie-By.Lyfing/2.Create-A"
+Path Line0002 = "-Graph-And-Show-Sine-Cosine-Wave-On-It/project/2-Using-Graph-Demo.uir"
+File Type = "User Interface Resource"
+Disk Date = 3463993225
+In Projects = "1,"
+Window Top = 62
+Window Left = 26
+Window Height = 431
+Window Width = 607
+Window Z-Order = 2
 
 [Build Options 0001]
 Generate Browse Info = True
