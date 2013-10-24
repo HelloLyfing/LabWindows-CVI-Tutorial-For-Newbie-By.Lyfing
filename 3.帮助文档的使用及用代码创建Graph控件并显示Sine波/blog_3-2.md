@@ -14,7 +14,7 @@
 LabWindows/CVI提供了一系列可创建各种可视化界面的函数和API，创建面板(Panel)的函数当然也包含其中，但它具体是什么，又应该怎么用呢？我们试着从帮助文档中找寻答案。  
 打开帮助文档(在LabWindows/CVI的任意界面**按F1快捷键**，或者从菜单栏 **Help** >> **Contents F1**打开)，在**索引**标签栏下的搜索框中输入*Panel*，在列出的一堆搜索结果中寻找 `panels (User Interface Editor)` 项，再接着找它的子项 `programming with`，双击打开它(**如下图所示**)：  
 
-![F1-Content-Programming-with-Panels.png]()  
+![F1-Content-Programming-with-Panels.png](http://ww2.sinaimg.cn/large/6480dca9jw1e9w7ha8bigj20ke0gk458.jpg)  
 
 <div id='how-to-find-useage'></div>*PS：想要查找**某个控件object的使用说明**，可以试着在帮助文档 >> **索引**标签下的搜索框输入它的名称，在搜索结果中找到它的使用介绍项 `object_name (User Interface)`及其子项，以查找相关帮助资料；想要查找**某个具体函数的使用说明**，方法同上，一般搜索结果第一项便是*  
 
@@ -35,7 +35,29 @@ LabWindows/CVI提供了一系列可创建各种可视化界面的函数和API，
 
 好了，现在我们整个的代码看起来应该是这个样子：
 
-    代码片段-3
+    #include <utility.h>
+    #include <cvirte.h>     
+    #include <userint.h>
+
+    static int panelHandle;
+
+    int createGUI_Mine(void);
+
+    int main (int argc, char *argv[]){
+        if (InitCVIRTE (0, argv, 0) == 0)
+            return -1;  /* out of memory */
+        if ((panelHandle = createGUI_Mine()) < 0)
+            return -1;
+        DisplayPanel (panelHandle);
+        RunUserInterface();
+        DiscardPanel (panelHandle);
+        return 0;
+    }
+
+    int createGUI_Mine(){
+        int pHandle = NewPanel(0, "用代码创建的图形界面", VAL_AUTO_CENTER, VAL_AUTO_CENTER, 600, 800);
+        return pHandle;
+    }
 
 <div id="how-to-debug"></div>**OK，到了这一步，先让我们试运行一下上面的程序吧**。运行程序(*Debug ***.exe*)的方法有三种：  
 
@@ -43,18 +65,18 @@ LabWindows/CVI提供了一系列可创建各种可视化界面的函数和API，
  2. 按快捷键组合 **Shift** + **F5**
  3. 鼠标点击如下按钮
 
-![Button-Debug-Project.png]()
+![Button-Debug-Project.png](http://ww3.sinaimg.cn/large/6480dca9jw1e9w7i9m65sj20hb037mxp.jpg)
 
 这时会弹出一个错误框，如下图所示：
 
-![Error-Content-Missing.prototype.(Require.function....png]()
+![Error-Content-Missing.prototype.(Require.function....png](http://ww1.sinaimg.cn/large/6480dca9jw1e9w7irfl81j20fh0eemz2.jpg)
 
 这是因为在LabWindows/CVI中，所有自定义的函数都是需要预定义，也就是得在 `main()` 函数之前声明原型(prototype)的。  
 这好办，只需要把这两个**自定义函数的*原型声明*添加到 `main()` 函数之前**就可以了。**但问题是，如何声明原型？**这里最简单的方法是，随便到帮助文档中找一个工程样例(sample)，看看里面的自定义函数的原型声明的句式便可。
 
 *PS：工程样例（sample）是LabWindows/CVI提供的用来演示如何使用某个控件或函数的可直接编译、运行的程序。**工程样例（sample）是快速入门LabWindows/CVI的编程格式及方法的大好捷径，一有机会就打开查看，有百利而无一害。**如何打开一个工程样例？以 `NewPanel()` 函数为例，当你在帮助文档中查找到 `NewPanel()` 函数的文档介绍页后，跳到这个页面的最底部，一般会附上若干工程样例，只需用鼠标单击"Open example"前的图标（如下图所示）便可打开这个叫做"userint\buildui.cws"的工程样例。* 
 
-![NI_Help_How-To-Use-Project-Example.png]()  
+![NI_Help_How-To-Use-Project-Example.png](http://ww1.sinaimg.cn/large/6480dca9jw1e9w7j7i5p8j20jk0au0uh.jpg)  
 
 在打开的"buildui.cws"工程样例中，我们点击**buildui.c**文件，找到
 
@@ -68,7 +90,7 @@ LabWindows/CVI提供了一系列可创建各种可视化界面的函数和API，
 
 好了，把如上内容添加到main()函数的前面，然后再次试运行这个程序，这时会弹出我们刚刚用代码创建的那个图形界面，它目前还只是一个只有标题栏的空白面板(Panel)。效果图如下：
 
-![Demo-用代码创建的图形界面.png]()  
+![Demo-用代码创建的图形界面.png](http://ww1.sinaimg.cn/large/6480dca9jw1e9w7jq97gjj20h409e3yo.jpg)  
 
 <div id='how-to-exit-debug-forcely'></div>由于还没设置退出选项，所以这个程序无法正常退出。我们可以到启动它的LabWindows/CVI中关闭它：跳转到LabWindows/CVI界面，点击菜单栏 **Running** >> **Terminate Execution**即可（或点击工具栏的**stop**按钮）。
 
@@ -76,10 +98,12 @@ LabWindows/CVI提供了一系列可创建各种可视化界面的函数和API，
 在创建Graph控件前，请先想一下这两个问题：  
 
  1. Graph控件是依附于哪个实体之上的，它的载体是什么？
- 2. Graph控件的创建工作应该被放在哪个部分？**main()**函数中、**createGUI_Mine()**函数中，或者其他地方？**
+ 2. Graph控件的创建工作应该被放在哪个部分？**main()**函数中、**createGUI_Mine()**函数中，或者其他地方？
 
-问题1：像其他的应用软件一样，控制类、显示类的控件都应该至少依附于一个面板(窗口)之上，也就是说这些控件得有个**载体**。在本章中，Graph控件及其他两个按钮控件(有待创建)都是依附于我们上一步创建的主面板(主界面基本元素)之上的。  
-问题2：光从名字我们便可以看出，`createGUI_Mine()` 函数就是用来完成创建图形界面元素的工作的，所以Graph控件的创建应该被安排到这里。  
+是不是这样的:
+
+ - 问题1：像其他的应用软件一样，控制类、显示类的控件都应该至少依附于一个面板(窗口)之上，也就是说这些控件得有个**载体**。在本章中，Graph控件及其他两个按钮控件(有待创建)都是依附于我们上一步创建的主面板(主界面基本元素)之上的。  
+ - 问题2：光从名字我们便可以看出，`createGUI_Mine()` 函数就是用来完成创建图形界面元素的工作的，所以Graph控件的创建应该被安排到这里。  
 
 *PS：在这里讲**载体**的概念，是为了之后创建Graph控件时更易理解传入`pHandle`的原因，就是因为所有的控件都需要一个载体(如面板)*  
 
@@ -127,7 +151,7 @@ LabWindows/CVI提供了一系列可创建各种可视化界面的函数和API，
 
 试运行一下程序([how?](#how-to-debug))，我们可以看到之前空空如也的面板上已经多出来一个graph了：
 
-![Demo-添加了graph控件后的图形界面.png]()
+![Demo-添加了graph控件后的图形界面.png](http://ww4.sinaimg.cn/large/6480dca9jw1e9w7k54b76j20h009ct9e.jpg)
 
 
 ##### 3) 在主面板上创建两个按钮：*show*、*quit*并分别为他们编写回调函数以发挥各自功能
@@ -163,7 +187,7 @@ a. 创建按钮
 
 试运行一下程序，添加了两个按钮的界面如下图所示：
 
-![Demo-添加了show-quit-按钮后的图形界面.png]()
+![Demo-添加了show-quit-按钮后的图形界面.png](http://ww3.sinaimg.cn/large/6480dca9jw1e9w7kikah0j20h009ejs5.jpg)
 
 到目前为止，我们已经完成了所有界面元素的创建工作。
 
@@ -184,7 +208,7 @@ b. 为两个按钮编写回调函数
  1. 将函数名`ControlResponse`改为更具体的`ButtonsResponse`（此改动可有可无）；
  2. 去除一些无关内容
 
- 精简后，两个按钮的回调函数变为：
+精简后，两个按钮的回调函数变为：
 
     int CVICALLBACK ButtonsResponse(int handle, int control, int event, 
                 void *callbackdata, int eventdata1, int eventdata2){
@@ -226,9 +250,35 @@ b. 为两个按钮编写回调函数
 
 然后在创建Graph控件以及两个Button按钮的地方(即`createGUI_Mine()`函数内)，去掉变量名*graphHdl*、*showBtn*和*quitBtn*前面的*int*即可。
 
-我们来编写**当事件发生在***showBtn***按钮上时的事件响应**，这里我们将复制部分[上一章][2nd-part-tutorial]中的内容，适当修改后变为：
+我们来编写**当事件发生在***showBtn***按钮上时的事件响应**：  
 
-<code>xxx</code>
+    if (control == showBtn) { //如果事件发生在show按钮上
+        switch (event) {
+            case EVENT_COMMIT :
+                //准备一个temp数组，用来存放按钮上要显示的"show"或"stop"字符串
+                char temp[8]="" ; GetCtrlAttribute(panelHandle, showBtn, ATTR_LABEL_TEXT, temp);
+                //清空graph上的内容，准备画图
+                DeleteGraphPlot(panelHandle, graphHdl, -1, VAL_IMMEDIATE_DRAW);
+                if (strcmp(temp, "Show") == 0 ){ //如果按钮显示的是"Show"的话
+                    //准备波形数组
+                    double waveData[100], amp, phase, cycles;
+                    int n;
+                    n = 100;
+                    amp = 90.0;
+                    phase = 0.0;
+                    cycles = 1.5;
+                    SinePattern(n, amp, phase, cycles, waveData);
+                    //将波形数组填充到graph图表上
+                    PlotY(panelHandle, graphHdl, waveData, n, VAL_DOUBLE, VAL_THIN_LINE, 
+                          VAL_EMPTY_SQUARE, VAL_SOLID, VAL_CONNECTED_POINTS , VAL_YELLOW);
+                    SetCtrlAttribute(panelHandle, showBtn, ATTR_LABEL_TEXT, "Clear");
+                }
+                else{ //如果按钮显示的是"Clear"的话
+                    SetCtrlAttribute(panelHandle, showBtn, ATTR_LABEL_TEXT, "Show");
+                }
+                break; 
+        }
+    }
 
 接着编写**当事件发生在***quitBtn***按钮上时的事件响应**：
 
@@ -273,8 +323,7 @@ b. 为两个按钮编写回调函数
 *****
 程序源码[托管在Github][github]上，请自行前往查看。
 
-[the-1st-part]:
-[ctrls-list]:
-[user-interface-events]:
-[2nd-part-tutorial]:
+[the-1st-part]:http://lanfengming.com/?p=167
+[ctrls-list]:http://zone.ni.com/reference/en-XX/help/370051V-01/cvi/uiref/cvioperating_controls/
+[user-interface-events]:http://zone.ni.com/reference/en-XX/help/370051V-01/cvi/uiref/cvievents_overview/
 [github]:https://github.com/HelloLyfing/LabWindows-CVI-Tutorial-For-Newbie-By.Lyfing
